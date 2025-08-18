@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Homepage from "./pages/Homepage";
+import Feed from "./pages/Feed";
 import "./App.css";
 
 function App() {
@@ -8,7 +10,10 @@ function App() {
   return (
     <Router>
       {token && <Navbar />}
-      <Routes></Routes>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/feed" element={<Feed />} />
+      </Routes>
     </Router>
   );
 }
