@@ -1,7 +1,9 @@
-import React from "react";
+// src/pages/Feed.jsx
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import CreatePost from "../components/CreatePost";
 
-const dummyPosts = [
+const initialPosts = [
   {
     id: 1,
     username: "Eman",
@@ -26,35 +28,41 @@ const dummyPosts = [
 ];
 
 const Feed = () => {
+  const [posts, setPosts] = useState(initialPosts);
+
+  const handlePostCreated = (newPost) => {
+    setPosts([newPost, ...posts]);
+  };
+
   return (
     <div className="feed-container">
-      {dummyPosts.map((post, index) => (
+      <CreatePost onPostCreated={handlePostCreated} />
+
+      {posts.map((post, index) => (
         <motion.div
           key={post.id}
           className="post-card"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.2, duration: 0.6 }}
+          transition={{ delay: index * 0.1, duration: 0.5 }}
         >
-          {/* User Info */}
           <div className="post-header">
             <img src={post.avatar} alt={post.username} className="avatar" />
             <h4>{post.username}</h4>
           </div>
 
-          {/* Post Image */}
-          <motion.img
-            src={post.image}
-            alt="post"
-            className="post-image"
-            whileHover={{ scale: 1.02 }}
-            transition={{ type: "spring", stiffness: 200 }}
-          />
+          {post.image && (
+            <motion.img
+              src={post.image}
+              alt="post"
+              className="post-image"
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 200 }}
+            />
+          )}
 
-          {/* Caption */}
           <p className="caption">{post.caption}</p>
 
-          {/* Actions */}
           <div className="post-actions">
             <button>❤️ Like</button>
             <button>💬 Comment</button>
